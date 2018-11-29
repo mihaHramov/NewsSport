@@ -14,7 +14,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 
-public class RepositoryOfNews {
+public class RepositoryOfNews implements IRepositoryOfNews{
     private NyNewsApi api;
 
     public RepositoryOfNews() {
