@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SportNews</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_details_web">DetailsWebActivity</string>
+    <string name="bbc_sport">bbc sport</string>
+    <string name="bbc_sportApi">bbc-sport</string>
+    <string name="fox_sports">fox  sports</string>
+    <string name="fox_sportsApi">fox-sports</string>
+    <string name="talksport">talk sport</string>
+    <string name="talksportApi">talksport</string>
+    <string name="the_sport_bible">sport bible</string>
+    <string name="the_sport_bibleApi">the-sport-bible</string>
+    <string name="empty_error">Error Internet Conection</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="aaa.bbb.ccc11.ui.NewsActivity">
+
+    <item
+        android:id="@+id/action_bbc_sport"
+        android:orderInCategory="100"
+        android:title="@string/bbc_sport"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_talksport"
+        android:orderInCategory="300"
+        android:title="@string/talksport"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sport_bible"
+        android:orderInCategory="400"
+        android:title="@string/the_sport_bible"
+        app:showAsAction="never" />
+</menu>
