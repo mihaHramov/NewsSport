@@ -33,8 +33,8 @@ import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
 import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivity,
@@ -58,8 +58,12 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     PresenterNewsActivity presenterNewsActivity;
 
     @ProvidePresenter
-   PresenterNewsActivity providePresenter() {
-        presenterNewsActivity = new PresenterNewsActivity(new RepositoryOfNews(), new StorageDB(this));
+    PresenterNewsActivity providePresenter() {
+        presenterNewsActivity = new PresenterNewsActivity.Builder()
+                .setRepository(new RepositoryOfNews())
+                .setLocalStorage(new StorageDB(this))
+                .setThreadUI(AndroidSchedulers.mainThread())
+                .setThreadBackground(Schedulers.newThread()).build();
         presenterNewsActivity.init();
         return presenterNewsActivity;
     }
