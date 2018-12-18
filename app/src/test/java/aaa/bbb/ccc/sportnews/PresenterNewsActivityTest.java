@@ -56,6 +56,25 @@ public class PresenterNewsActivityTest {
         verify(state).showMenu(responceOfSource.getSources());
         verify(state, never()).showErrorEmptyList();
     }
+    @Test
+    public void test_filter() {
+        News news = getNews();
+        List<Article> articles = new ArrayList<>();
+        for (int i =0;i<news.getArticles().size();i++) {
+            Article article  =news.getArticles().get(i);
+            article.setUrl("facebook");
+            articles.add(article);
+        }
+        news.setArticles(articles);
+
+        ResponceOfSource responceOfSource = getResponceOfSource();
+        when(repositoryOfNews.getAllSource())
+                .then((Answer<Observable<ResponceOfSource>>) invocation -> Observable.just(responceOfSource));
+        when(repositoryOfNews.getNews(anyString()))
+                .then((Answer<Observable<News>>) invocation -> Observable.just(news));
+        presenterNewsActivity.init();
+        verify(state).showErrorEmptyList();
+    }
 
     @Test
     public void news_is_show() {
