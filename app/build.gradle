@@ -24,8 +24,8 @@ android {
 }
 
 
-def retrofit = "2.3.0"
-def okhttp = "3.8.0"
+def retrofit = "2.5.0"
+def okhttp = "3.12.1"
 def dagger = "2.16"
 
 dependencies {
