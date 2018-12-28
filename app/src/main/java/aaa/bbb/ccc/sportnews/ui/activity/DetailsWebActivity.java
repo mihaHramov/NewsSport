@@ -1,5 +1,6 @@
 package aaa.bbb.ccc.sportnews.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class DetailsWebActivity extends AppCompatActivity {
     @BindView(R.id.web_view)
     WebView webView;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class DetailsWebActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
     }
-    public static Intent getIstance(Context context, Article article){
+    public static Intent getInstance(Context context, Article article){
         Intent intent = new Intent(context,DetailsWebActivity.class);
         intent.putExtra(KEY,article);
         return intent;

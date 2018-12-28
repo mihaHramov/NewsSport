@@ -12,8 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -23,9 +21,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
+import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
-import aaa.bbb.ccc.sportnews.mvp.model.RepositoryOfNews;
-import aaa.bbb.ccc.sportnews.mvp.model.StorageDB;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsActivity;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
 import aaa.bbb.ccc.sportnews.pojo.Article;
@@ -33,8 +30,6 @@ import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
 import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivity,
@@ -59,11 +54,7 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
 
     @ProvidePresenter
     PresenterNewsActivity providePresenter() {
-        presenterNewsActivity = new PresenterNewsActivity.Builder()
-                .setRepository(new RepositoryOfNews())
-                .setLocalStorage(new StorageDB(this))
-                .setThreadUI(AndroidSchedulers.mainThread())
-                .setThreadBackground(Schedulers.newThread()).build();
+        presenterNewsActivity  = NewsApp.getNewsListComponent().getPresenter();
         presenterNewsActivity.init();
         return presenterNewsActivity;
     }
@@ -87,12 +78,9 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         setContentView(R.layout.activity_news);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        adapter = new ArticleAdapter(article -> startActivity(DetailsWebActivity.getIstance(this, article)));
+        NewsApp.getNewsListComponent().inject(this);
+        adapter = new ArticleAdapter(article -> startActivity(DetailsWebActivity.getInstance(this, article)));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this,
-                getResources().getIdentifier("layout_animation_fall_down", "anim", getPackageName()));
-        recyclerView.setLayoutAnimation(animation);
-        recyclerView.scheduleLayoutAnimation();
         recyclerView.setAdapter(adapter);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
