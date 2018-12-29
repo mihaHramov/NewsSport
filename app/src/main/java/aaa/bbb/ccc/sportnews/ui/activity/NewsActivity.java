@@ -18,9 +18,9 @@ import java.util.List;
 
 import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
+import aaa.bbb.ccc.sportnews.mvp.model.Source;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsActivity;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
-import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
 import aaa.bbb.ccc.sportnews.ui.fragment.BaseNewsListFragment;
 import aaa.bbb.ccc.sportnews.ui.fragment.NewsListFragment;
 import butterknife.BindView;
@@ -46,7 +46,7 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     }
 
     @Override
-    public void showNews(String string) {
+    public void showNews(Source string) {
         container.displayNews(string);
     }
 
@@ -89,9 +89,9 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     }
 
     @Override
-    public void showMenu(List<GlobalSource> globalSources) {
+    public void showMenu(List<Source> globalSources) {
         for (int i = 0; i < globalSources.size(); i++) {
-            GlobalSource item = globalSources.get(i);
+            Source item = globalSources.get(i);
             navigationView.getMenu()
                     .add(Menu.NONE, i, i, item.getName())
                     .setOnMenuItemClickListener(menuItem -> {

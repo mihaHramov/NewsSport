@@ -6,16 +6,15 @@ import com.arellomobile.mvp.MvpPresenter;
 import java.util.List;
 
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
+import aaa.bbb.ccc.sportnews.mvp.model.Source;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
-import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
-import aaa.bbb.ccc.sportnews.pojo.ResponceOfSource;
 import rx.Scheduler;
 
 
 @InjectViewState
 public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
     private IRepositoryOfNews repository;
-    private List<GlobalSource> localGlobalSource;
+    private List<Source> localGlobalSource;
     private Scheduler uiThread;
     private Scheduler newThread;
 
@@ -28,7 +27,6 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
 
     private void init() {
         repository.getAllSource()
-                .map(ResponceOfSource::getSources)
                 .subscribeOn(newThread)
                 .observeOn(uiThread)
                 .doOnNext(globalSources -> localGlobalSource = globalSources)
@@ -37,7 +35,7 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
     }
 
     public void showNews(Integer id) {
-        String string = localGlobalSource.get(id).getId();
+        Source string = localGlobalSource.get(id);
         getViewState().selectItemMenu(id);
         getViewState().showNews(string);
     }

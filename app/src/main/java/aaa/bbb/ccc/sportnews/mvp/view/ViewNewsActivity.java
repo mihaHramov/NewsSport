@@ -5,11 +5,11 @@ import com.arellomobile.mvp.MvpView;
 
 import java.util.List;
 
-import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
+import aaa.bbb.ccc.sportnews.mvp.model.Source;
 
 
 public interface ViewNewsActivity  extends MvpView{
-    void showMenu(List<GlobalSource> globalSources);
+    void showMenu(List<Source> globalSources);
     void selectItemMenu(Integer id);
-    void showNews(String string);
+    void showNews(Source string);
 }

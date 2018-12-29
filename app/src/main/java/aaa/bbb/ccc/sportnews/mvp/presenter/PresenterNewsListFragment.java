@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
+import aaa.bbb.ccc.sportnews.mvp.model.Source;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import rx.Observable;
 import rx.Scheduler;
@@ -21,7 +22,7 @@ public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment
         this.repository = repositoryOfNews;
     }
 
-    public void init(String string) {
+    public void init(Source string) {
         repository.getNews(string)
                 .flatMap(news -> Observable.from(news.getArticles()))
                 .filter(article -> !article.getUrl().contains("facebook"))
