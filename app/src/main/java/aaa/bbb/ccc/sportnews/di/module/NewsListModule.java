@@ -4,6 +4,7 @@ import javax.inject.Named;
 
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsListFragment;
+import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
 import dagger.Module;
 import dagger.Provides;
 import rx.Scheduler;
@@ -22,4 +23,8 @@ public class NewsListModule {
                 .build();
     }
 
+    @Provides
+    ArticleAdapter getAdapter() {
+        return new ArticleAdapter();
+    }
 }

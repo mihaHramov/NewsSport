@@ -3,7 +3,7 @@ package aaa.bbb.ccc.sportnews.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
@@ -34,7 +36,8 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
     AVLoadingIndicatorView progressBar;
     @BindView(R.id.empty_list)
     TextView emptyList;
-    private ArticleAdapter adapter;
+    @Inject
+    ArticleAdapter adapter;
 
     @InjectPresenter
     PresenterNewsListFragment presenterNewsListFragment;
@@ -47,9 +50,6 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
     @Override
     public void displayNews(String tag) {
         presenterNewsListFragment.init(tag);
-    }
-
-    public NewsListFragment() {
     }
 
     @Override
@@ -76,9 +76,9 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_news_list, container, false);
         ButterKnife.bind(this, v);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         NewsApp.getNewsListComponent().inject(this);
-        adapter = new ArticleAdapter(article -> startActivity(DetailsWebActivity.getInstance(getActivity(), article)));
+        adapter.setOnItemClick(article -> startActivity(DetailsWebActivity.getInstance(getActivity(), article)));
         recyclerView.setAdapter(adapter);
         return v;
     }
