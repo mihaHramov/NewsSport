@@ -3,7 +3,7 @@ package aaa.bbb.ccc.sportnews.mvp.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
-import aaa.bbb.ccc.sportnews.mvp.model.ILocalStarage;
+import aaa.bbb.ccc.sportnews.mvp.model.ILocalStorage;
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import rx.Observable;
@@ -12,11 +12,11 @@ import rx.Scheduler;
 @InjectViewState
 public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment> {
     private IRepositoryOfNews repository;
-    private ILocalStarage localStorage;
+    private ILocalStorage localStorage;
     private Scheduler uiThread;
     private Scheduler newThread;
 
-    private PresenterNewsListFragment(IRepositoryOfNews repositoryOfNews, ILocalStarage localStorage,
+    private PresenterNewsListFragment(IRepositoryOfNews repositoryOfNews, ILocalStorage localStorage,
                                       Scheduler thread, Scheduler newThread) {
         this.uiThread = thread;
         this.newThread = newThread;
@@ -42,7 +42,7 @@ public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment
         private Scheduler threadUI;
         private Scheduler threadBackground;
         private IRepositoryOfNews repository;
-        private ILocalStarage localStorage;
+        private ILocalStorage localStorage;
 
         public PresenterNewsListFragment.Builder setThreadUI(Scheduler threadUI) {
             this.threadUI = threadUI;
@@ -59,7 +59,7 @@ public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment
             return this;
         }
 
-        public PresenterNewsListFragment.Builder setLocalStorage(ILocalStarage localStorage) {
+        public PresenterNewsListFragment.Builder setLocalStorage(ILocalStorage localStorage) {
             this.localStorage = localStorage;
             return this;
         }

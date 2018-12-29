@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import aaa.bbb.ccc.sportnews.pojo.Article;
 import aaa.bbb.ccc.sportnews.pojo.News;
 
 
-public class StorageDB extends SQLiteOpenHelper implements ILocalStarage {
+public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "newsManager";
     private static final String TABLE_ARTICLES = "article";

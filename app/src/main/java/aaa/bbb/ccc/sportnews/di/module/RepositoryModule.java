@@ -5,7 +5,7 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import aaa.bbb.ccc.sportnews.api.NyNewsApi;
-import aaa.bbb.ccc.sportnews.mvp.model.ILocalStarage;
+import aaa.bbb.ccc.sportnews.mvp.model.ILocalStorage;
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
 import aaa.bbb.ccc.sportnews.mvp.model.RepositoryOfNews;
 import aaa.bbb.ccc.sportnews.mvp.model.StorageDB;
@@ -16,13 +16,13 @@ import dagger.Provides;
 public class RepositoryModule {
     @Provides
     @Singleton
-    IRepositoryOfNews provideRepositoryOfNews(NyNewsApi api) {
+    IRepositoryOfNews provideRepositoryOfNews(NyNewsApi api,ILocalStorage localStorage) {
         return new RepositoryOfNews(api);
     }
 
     @Provides
     @Singleton
-    ILocalStarage provideLocalRepository(Context context) {
+    ILocalStorage provideLocalRepository(Context context) {
         return new StorageDB(context);
     }
 }
