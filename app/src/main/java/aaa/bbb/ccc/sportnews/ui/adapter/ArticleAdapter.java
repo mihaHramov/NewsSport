@@ -1,6 +1,5 @@
 package aaa.bbb.ccc.sportnews.ui.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +25,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
 
     private List<Article> list;
-    private Context ctx;
     private OnItemClick onItemClick;
 
 
-    public ArticleAdapter(OnItemClick onItemClick) {
+    public void setOnItemClick(OnItemClick onItemClick) {
         this.onItemClick = onItemClick;
     }
 
@@ -42,15 +40,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        this.ctx = parent.getContext();
-        View v = LayoutInflater.from(ctx).inflate(R.layout.item_article, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_article, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Article article = list.get(position);
-        Picasso.with(ctx)
+        Picasso.get()
                 .load(article.getUrlToImage())
                 .placeholder(R.drawable.no_image)
                 .error(R.drawable.error)
