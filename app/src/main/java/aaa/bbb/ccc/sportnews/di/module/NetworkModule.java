@@ -1,6 +1,8 @@
 package aaa.bbb.ccc.sportnews.di.module;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -110,6 +112,7 @@ public class NetworkModule {
                 .baseUrl(NyNewsApi.BASE_URL)
                 .client(client)
                 .build();//базовый url
+        Log.d("mihaHramov","api");
         return retrofit.create(NyNewsApi.class);
     }
 }

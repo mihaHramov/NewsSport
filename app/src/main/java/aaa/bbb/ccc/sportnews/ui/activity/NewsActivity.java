@@ -6,18 +6,13 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
@@ -25,9 +20,9 @@ import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsActivity;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
-import aaa.bbb.ccc.sportnews.pojo.Article;
 import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
-import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
+import aaa.bbb.ccc.sportnews.ui.fragment.BaseNewsListFragment;
+import aaa.bbb.ccc.sportnews.ui.fragment.NewsListFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,39 +31,23 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.progress)
-    AVLoadingIndicatorView progressBar;
-    @BindView(R.id.empty_list)
-    TextView emptyList;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-    private ArticleAdapter adapter;
-
+    private BaseNewsListFragment container;
 
     @InjectPresenter
     PresenterNewsActivity presenterNewsActivity;
 
     @ProvidePresenter
     PresenterNewsActivity providePresenter() {
-        presenterNewsActivity  = NewsApp.getNewsListComponent().getPresenter();
-        presenterNewsActivity.init();
-        return presenterNewsActivity;
+        return NewsApp.getMenuComponent().getPresenter();
     }
 
     @Override
-    public void showErrorEmptyList() {
-        emptyList.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void clearError() {
-        recyclerView.setVisibility(View.VISIBLE);
-        emptyList.setVisibility(View.GONE);
+    public void showNews(String string) {
+        container.displayNews(string);
     }
 
     @Override
@@ -78,10 +57,15 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         setContentView(R.layout.activity_news);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        NewsApp.getNewsListComponent().inject(this);
-        adapter = new ArticleAdapter(article -> startActivity(DetailsWebActivity.getInstance(this, article)));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(adapter);
+        NewsApp.getMenuComponent().inject(this);
+        if (savedInstanceState == null) {
+            container = new NewsListFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, container)
+                    .commit();
+        }
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -105,15 +89,6 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     }
 
     @Override
-    public void loading(Boolean b) {
-        if (b)
-            progressBar.show();
-        else
-            progressBar.hide();
-    }
-
-
-    @Override
     public void showMenu(List<GlobalSource> globalSources) {
         for (int i = 0; i < globalSources.size(); i++) {
             GlobalSource item = globalSources.get(i);
@@ -126,16 +101,10 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         }
     }
 
-
     @Override
     public void selectItemMenu(Integer id) {
         for (int i = 0; i < navigationView.getMenu().size(); i++) {
             navigationView.getMenu().getItem(i).setChecked(id == i);
         }
-    }
-
-    @Override
-    public void showNews(List<Article> news) {
-        adapter.setList(news);
     }
 }
