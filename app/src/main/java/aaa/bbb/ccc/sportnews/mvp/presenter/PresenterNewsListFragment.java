@@ -3,7 +3,6 @@ package aaa.bbb.ccc.sportnews.mvp.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
-import aaa.bbb.ccc.sportnews.mvp.model.ILocalStorage;
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import rx.Observable;
@@ -38,7 +37,6 @@ public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment
         private Scheduler threadUI;
         private Scheduler threadBackground;
         private IRepositoryOfNews repository;
-        private ILocalStorage localStorage;
 
         public PresenterNewsListFragment.Builder setThreadUI(Scheduler threadUI) {
             this.threadUI = threadUI;
@@ -54,12 +52,6 @@ public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment
             this.repository = repository;
             return this;
         }
-
-        public PresenterNewsListFragment.Builder setLocalStorage(ILocalStorage localStorage) {
-            this.localStorage = localStorage;
-            return this;
-        }
-
 
         public PresenterNewsListFragment build() {
             return new PresenterNewsListFragment(repository, threadUI, threadBackground);
