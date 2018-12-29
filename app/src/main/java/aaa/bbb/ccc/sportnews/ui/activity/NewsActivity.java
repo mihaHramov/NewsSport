@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -29,6 +31,8 @@ import butterknife.ButterKnife;
 
 public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivity,
         NavigationView.OnNavigationItemSelectedListener {
+    @BindView(R.id.error)
+    TextView error;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
@@ -71,6 +75,11 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void showError(Boolean bool) {
+        error.setVisibility(bool?View.VISIBLE:View.GONE);
     }
 
     @Override

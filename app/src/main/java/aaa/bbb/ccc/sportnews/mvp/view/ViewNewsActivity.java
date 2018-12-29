@@ -19,4 +19,6 @@ public interface ViewNewsActivity extends MvpView {
 
     @StateStrategyType(value = OneExecutionStateStrategy.class)
     void showNews(Source string);
+
+    void showError(Boolean bool);
 }

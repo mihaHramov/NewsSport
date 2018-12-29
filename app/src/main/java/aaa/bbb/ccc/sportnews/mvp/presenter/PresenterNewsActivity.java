@@ -31,7 +31,13 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
                 .observeOn(uiThread)
                 .doOnNext(globalSources -> localGlobalSource = globalSources)
                 .doOnNext(globalSources -> getViewState().showMenu(globalSources))
-                .subscribe(globalSources -> showNews(0));
+                .subscribe(globalSources -> {
+                    Boolean isEmpty  = globalSources.size() == 0;
+                    if (!isEmpty) {
+                        showNews(0);
+                    }
+                    getViewState().showError(isEmpty);
+                });
     }
 
     public void showNews(Integer id) {
