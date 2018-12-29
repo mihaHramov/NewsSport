@@ -12,22 +12,18 @@ import rx.Scheduler;
 @InjectViewState
 public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment> {
     private IRepositoryOfNews repository;
-    private ILocalStorage localStorage;
     private Scheduler uiThread;
     private Scheduler newThread;
 
-    private PresenterNewsListFragment(IRepositoryOfNews repositoryOfNews, ILocalStorage localStorage,
+    private PresenterNewsListFragment(IRepositoryOfNews repositoryOfNews,
                                       Scheduler thread, Scheduler newThread) {
         this.uiThread = thread;
         this.newThread = newThread;
         this.repository = repositoryOfNews;
-        this.localStorage = localStorage;
     }
 
     public void init(String string) {
         repository.getNews(string)
-                .doOnNext(news -> localStorage.addNews(news, string))
-                .onErrorResumeNext(throwable -> Observable.fromCallable(() -> localStorage.getNewsBySource(string)))
                 .flatMap(news -> Observable.from(news.getArticles()))
                 .filter(article -> !article.getUrl().contains("facebook"))
                 .toList()
@@ -66,7 +62,7 @@ public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment
 
 
         public PresenterNewsListFragment build() {
-            return new PresenterNewsListFragment(repository, localStorage, threadUI, threadBackground);
+            return new PresenterNewsListFragment(repository, threadUI, threadBackground);
         }
     }
 }

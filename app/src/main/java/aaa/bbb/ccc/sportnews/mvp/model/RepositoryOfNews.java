@@ -15,7 +15,9 @@ public class RepositoryOfNews implements IRepositoryOfNews{
     }
 
     public Observable<News> getNews(String string){
-       return api.getAllNews(string);
+       return api.getAllNews(string)
+               .doOnNext(news -> storage.addNews(news, string))
+               .onErrorResumeNext(throwable -> Observable.fromCallable(() -> storage.getNewsBySource(string)));
     }
 
     public Observable<ResponceOfSource> getAllSource() {
