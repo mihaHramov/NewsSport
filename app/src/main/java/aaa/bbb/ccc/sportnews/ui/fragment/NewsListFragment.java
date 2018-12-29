@@ -67,7 +67,8 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
 
     @Override
     public void showError(Boolean isShow) {
-
+        emptyList.setVisibility(isShow?View.VISIBLE:View.GONE);
+        recyclerView.setVisibility(isShow?View.GONE:View.VISIBLE);
     }
 
     @Override
