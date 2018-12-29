@@ -17,7 +17,7 @@ public class RepositoryModule {
     @Provides
     @Singleton
     IRepositoryOfNews provideRepositoryOfNews(NyNewsApi api,ILocalStorage localStorage) {
-        return new RepositoryOfNews(api);
+        return new RepositoryOfNews(api,localStorage);
     }
 
     @Provides
