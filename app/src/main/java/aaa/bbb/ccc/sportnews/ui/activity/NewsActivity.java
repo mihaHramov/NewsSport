@@ -46,7 +46,9 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
 
     @ProvidePresenter
     PresenterNewsActivity providePresenter() {
-        return NewsApp.getMenuComponent().getPresenter();
+        presenterNewsActivity = NewsApp.getMenuComponent().getPresenter();
+        presenterNewsActivity.init();
+        return presenterNewsActivity;
     }
 
     @Override

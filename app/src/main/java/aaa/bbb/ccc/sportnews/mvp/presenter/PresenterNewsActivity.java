@@ -22,11 +22,11 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
         this.uiThread = thread;
         this.newThread = newThread;
         this.repository = repositoryOfNews;
-        this.init();
     }
 
-    private void init() {
-        repository.getAllSource()
+    public void init() {
+        repository
+                .getAllSource()
                 .subscribeOn(newThread)
                 .observeOn(uiThread)
                 .doOnNext(globalSources -> localGlobalSource = globalSources)
