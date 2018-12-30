@@ -7,8 +7,8 @@ import aaa.bbb.ccc.sportnews.pojo.News;
 
 
 public interface ILocalStorage {
-    Source addNewsSource(GlobalSource source);
-    List<Source> getAllSources();
-    void addNews(News news, Source source);
-    News getNewsBySource(Source string);
+    NewsSource addNewsSource(GlobalSource source);
+    List<NewsSource> getAllSources();
+    void addNews(News news, NewsSource source);
+    News getNewsBySource(NewsSource string);
 }

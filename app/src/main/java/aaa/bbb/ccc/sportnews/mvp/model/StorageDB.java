@@ -40,11 +40,11 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     }
 
     @Override
-    public List<Source> getAllSources() {
+    public List<NewsSource> getAllSources() {
         SQLiteDatabase db = this.getWritableDatabase();
         String selectQuery = "SELECT  * FROM " + TABLE_SOURCE;
         Cursor c = db.rawQuery(selectQuery, null);
-        List<Source> sourcesList = new ArrayList<>();
+        List<NewsSource> sourcesList = new ArrayList<>();
 
         if (c.moveToFirst()) {
             int idColIndex = c.getColumnIndex(KEY_ID_SOURCE);
@@ -52,7 +52,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
             int nameColIndex = c.getColumnIndex(KEY_NAME_OF_SOURCE);
 
             do{
-                Source source = new Source();
+                NewsSource source = new NewsSource();
                 source.setId(c.getInt(idColIndex));
                 source.setName(c.getString(nameColIndex));
                 source.setUrl(c.getString(urlColIndex));
@@ -65,13 +65,13 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     }
 
     @Override
-    public Source addNewsSource(GlobalSource sourceName) {
+    public NewsSource addNewsSource(GlobalSource sourceName) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_SOURCE + " WHERE " + KEY_URL_OF_SOURCE + "='" + sourceName.getId() + "'";
 
         Cursor c = db.rawQuery(selectQuery, null);
-        Source source = new Source();
+        NewsSource source = new NewsSource();
         if(!c.moveToFirst()){
             ContentValues cv = new ContentValues();
             cv.put(KEY_NAME_OF_SOURCE, sourceName.getName());
@@ -94,7 +94,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     }
 
     @Override
-    public News getNewsBySource(Source source) {
+    public News getNewsBySource(NewsSource source) {
         News news = new News();
         SQLiteDatabase db = this.getWritableDatabase();
         String selectQuery = "SELECT  * FROM " + TABLE_ARTICLES + " WHERE " + KEY_URL_OF_SOURCE + "='" + source.getId() + "'";
@@ -125,7 +125,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     }
 
     @Override
-    public void addNews(News news, Source souce) {
+    public void addNews(News news, NewsSource souce) {
         if (news == null) return;
         SQLiteDatabase db = this.getWritableDatabase();
         for (Article ar : news.getArticles()) {

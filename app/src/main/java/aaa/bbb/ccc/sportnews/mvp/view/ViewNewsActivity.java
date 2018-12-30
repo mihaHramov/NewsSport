@@ -8,17 +8,17 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 import java.util.List;
 
-import aaa.bbb.ccc.sportnews.mvp.model.Source;
+import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
 
 
 public interface ViewNewsActivity extends MvpView {
-    void showMenu(List<Source> globalSources);
+    void showMenu(List<NewsSource> globalSources);
 
     @StateStrategyType(value = AddToEndSingleStrategy.class)
     void selectItemMenu(Integer id);
 
     @StateStrategyType(value = OneExecutionStateStrategy.class)
-    void showNews(Source string);
+    void showNews(NewsSource string);
 
     void showError(Boolean bool);
 }

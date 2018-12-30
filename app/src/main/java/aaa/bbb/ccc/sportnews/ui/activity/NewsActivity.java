@@ -20,7 +20,7 @@ import java.util.List;
 
 import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
-import aaa.bbb.ccc.sportnews.mvp.model.Source;
+import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsActivity;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
 import aaa.bbb.ccc.sportnews.ui.fragment.BaseNewsListFragment;
@@ -52,7 +52,7 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     }
 
     @Override
-    public void showNews(Source string) {
+    public void showNews(NewsSource string) {
         container.displayNews(string);
     }
 
@@ -100,9 +100,9 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     }
 
     @Override
-    public void showMenu(List<Source> globalSources) {
+    public void showMenu(List<NewsSource> globalSources) {
         for (int i = 0; i < globalSources.size(); i++) {
-            Source item = globalSources.get(i);
+            NewsSource item = globalSources.get(i);
             navigationView.getMenu()
                     .add(Menu.NONE, i, i, item.getName())
                     .setOnMenuItemClickListener(menuItem -> {

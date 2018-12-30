@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
-import aaa.bbb.ccc.sportnews.mvp.model.Source;
+import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import aaa.bbb.ccc.sportnews.pojo.Article;
@@ -49,7 +49,7 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
     }
 
     @Override
-    public void displayNews(Source tag) {
+    public void displayNews(NewsSource tag) {
         presenterNewsListFragment.init(tag);
     }
 

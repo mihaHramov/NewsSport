@@ -6,7 +6,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import java.util.List;
 
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
-import aaa.bbb.ccc.sportnews.mvp.model.Source;
+import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
 import rx.Scheduler;
 
@@ -14,7 +14,7 @@ import rx.Scheduler;
 @InjectViewState
 public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
     private IRepositoryOfNews repository;
-    private List<Source> localGlobalSource;
+    private List<NewsSource> localGlobalSource;
     private Scheduler uiThread;
     private Scheduler newThread;
 
@@ -41,7 +41,7 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
     }
 
     public void showNews(Integer id) {
-        Source string = localGlobalSource.get(id);
+        NewsSource string = localGlobalSource.get(id);
         getViewState().selectItemMenu(id);
         getViewState().showNews(string);
     }

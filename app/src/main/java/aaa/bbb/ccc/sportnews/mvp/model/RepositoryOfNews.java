@@ -16,13 +16,13 @@ public class RepositoryOfNews implements IRepositoryOfNews{
         this.storage = storage;
     }
 
-    public Observable<News> getNews(Source string){
+    public Observable<News> getNews(NewsSource string){
        return api.getAllNews(string.getUrl())
                .doOnNext(news -> storage.addNews(news, string))
                .onErrorResumeNext(throwable -> Observable.fromCallable(() -> storage.getNewsBySource(string)));
     }
 
-    public Observable<List<Source>> getAllSource() {
+    public Observable<List<NewsSource>> getAllSource() {
         return api.getAllSource()
                 .map(ResponceOfSource::getSources)
                 .flatMap(Observable::from)
