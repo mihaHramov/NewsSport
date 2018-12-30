@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import aaa.bbb.ccc.sportnews.pojo.Article;
-import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
-import aaa.bbb.ccc.sportnews.pojo.News;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.Article;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.GlobalSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.News;
 
 
 public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {

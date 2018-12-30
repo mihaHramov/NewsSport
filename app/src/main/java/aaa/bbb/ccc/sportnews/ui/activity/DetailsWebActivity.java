@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import aaa.bbb.ccc.sportnews.R;
-import aaa.bbb.ccc.sportnews.pojo.Article;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.Article;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

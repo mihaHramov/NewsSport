@@ -2,8 +2,8 @@ package aaa.bbb.ccc.sportnews.mvp.model;
 
 import java.util.List;
 
-import aaa.bbb.ccc.sportnews.pojo.GlobalSource;
-import aaa.bbb.ccc.sportnews.pojo.News;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.GlobalSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.News;
 
 
 public interface ILocalStorage {

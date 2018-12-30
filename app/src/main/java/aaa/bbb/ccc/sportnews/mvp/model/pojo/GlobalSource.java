@@ -1,5 +1,5 @@
 
-package aaa.bbb.ccc.sportnews.pojo;
+package aaa.bbb.ccc.sportnews.mvp.model.pojo;
 
 
 import com.google.gson.annotations.Expose;

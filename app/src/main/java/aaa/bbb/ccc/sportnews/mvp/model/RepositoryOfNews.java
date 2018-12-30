@@ -3,8 +3,8 @@ package aaa.bbb.ccc.sportnews.mvp.model;
 import java.util.List;
 
 import aaa.bbb.ccc.sportnews.api.NyNewsApi;
-import aaa.bbb.ccc.sportnews.pojo.News;
-import aaa.bbb.ccc.sportnews.pojo.ResponceOfSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.News;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.ResponceOfSource;
 import rx.Observable;
 
 public class RepositoryOfNews implements IRepositoryOfNews{

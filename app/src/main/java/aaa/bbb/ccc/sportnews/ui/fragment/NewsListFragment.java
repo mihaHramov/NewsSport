@@ -23,7 +23,7 @@ import aaa.bbb.ccc.sportnews.R;
 import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
-import aaa.bbb.ccc.sportnews.pojo.Article;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.Article;
 import aaa.bbb.ccc.sportnews.ui.activity.DetailsWebActivity;
 import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
 import butterknife.BindView;

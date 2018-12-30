@@ -1,7 +1,7 @@
 package aaa.bbb.ccc.sportnews.api;
 
-import aaa.bbb.ccc.sportnews.pojo.News;
-import aaa.bbb.ccc.sportnews.pojo.ResponceOfSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.News;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.ResponceOfSource;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
