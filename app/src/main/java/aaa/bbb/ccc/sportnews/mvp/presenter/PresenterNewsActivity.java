@@ -6,7 +6,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import java.util.List;
 
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
-import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
 import rx.Scheduler;
 

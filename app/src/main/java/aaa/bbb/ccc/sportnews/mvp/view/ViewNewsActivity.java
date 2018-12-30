@@ -8,7 +8,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 import java.util.List;
 
-import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 
 
 public interface ViewNewsActivity extends MvpView {

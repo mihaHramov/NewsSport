@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 import aaa.bbb.ccc.sportnews.mvp.model.IRepositoryOfNews;
-import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import rx.Observable;
 import rx.Scheduler;

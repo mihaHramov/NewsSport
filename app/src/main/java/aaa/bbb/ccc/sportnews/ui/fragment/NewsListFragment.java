@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
-import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.model.pojo.Article;

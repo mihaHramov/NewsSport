@@ -4,6 +4,7 @@ import java.util.List;
 
 import aaa.bbb.ccc.sportnews.api.NyNewsApi;
 import aaa.bbb.ccc.sportnews.mvp.model.pojo.News;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.model.pojo.ResponceOfSource;
 import rx.Observable;
 

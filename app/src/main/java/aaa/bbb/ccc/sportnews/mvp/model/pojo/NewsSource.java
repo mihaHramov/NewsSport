@@ -1,4 +1,4 @@
-package aaa.bbb.ccc.sportnews.mvp.model;
+package aaa.bbb.ccc.sportnews.mvp.model.pojo;
 
 public class NewsSource {
     private String name;

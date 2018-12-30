@@ -20,7 +20,7 @@ import java.util.List;
 
 import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
-import aaa.bbb.ccc.sportnews.mvp.model.NewsSource;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsActivity;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
 import aaa.bbb.ccc.sportnews.ui.fragment.BaseNewsListFragment;
