@@ -23,6 +23,7 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -43,6 +44,25 @@ public class RepositoryOfNewsTest {
     }
 
 
+
+    @Test
+    public void test_get_news_then_server_get_error(){
+        NewsSource newsSource = getAnyNewsSource();
+        when(api.getAllNews(anyString())).thenReturn(Observable.error(new Throwable()));
+        repositoryOfNews.getNews(newsSource).subscribe(new TestSubscriber<>());
+        verify(storage).getNewsBySource(newsSource);
+    }
+
+
+    @Test
+    public void test_storage_add_news_to_local_bd(){
+        News news = getNews();
+        NewsSource newsSource = getAnyNewsSource();
+        when(api.getAllNews(anyString())).then((Answer<Observable<News>>) invocation -> Observable.just(news));
+        repositoryOfNews.getNews(newsSource).subscribe(new TestSubscriber<>());
+        verify(storage).addNews(news,newsSource);
+    }
+
     @Test
     public void test_save_news_source_in_local_bd() {
         ResponceOfSource responceOfSource = getResponceOfSource();
@@ -62,10 +82,7 @@ public class RepositoryOfNewsTest {
         }
         when(api.getAllSource()).thenReturn(Observable.error(new Throwable()));
         when(storage.getAllSources()).then((Answer<List<NewsSource>>) invocation -> newsSourceList);
-
-        when(storage.addNewsSource(any(GlobalSource.class))).then((Answer<NewsSource>) invocation -> source);
         repositoryOfNews.getAllSource().subscribe(new TestSubscriber<>());
-
         verify(storage).getAllSources();
     }
 
