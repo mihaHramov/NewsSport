@@ -13,4 +13,5 @@ import dagger.Component;
 public interface NewsAppComponent {
     NewsListComponent getNewsListComponent();
     NewsMenuComponent getNewsMenuComponent();
+    NewsDetailsComponent getNewsDetailsComponent();
 }

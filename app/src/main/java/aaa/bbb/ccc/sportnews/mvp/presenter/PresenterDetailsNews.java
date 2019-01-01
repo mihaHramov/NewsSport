@@ -9,8 +9,7 @@ import aaa.bbb.ccc.sportnews.mvp.view.ViewDetailsNews;
 @InjectViewState
 public class PresenterDetailsNews extends MvpPresenter<ViewDetailsNews> {
     private Article article;
-
-    public PresenterDetailsNews(Article article) {
+    public void init(Article article){
         this.article = article;
         getViewState().initView(article);
     }
