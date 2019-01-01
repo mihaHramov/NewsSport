@@ -1,7 +1,6 @@
 package aaa.bbb.ccc.sportnews.ui.adapter;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,9 +51,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 .placeholder(R.drawable.no_image)
                 .error(R.drawable.error)
                 .into(holder.picture);
-        holder.card_view.setOnClickListener(view -> onItemClick.onItemClick(list.get(position)));
+        holder.itemView.setOnClickListener(view -> onItemClick.onItemClick(list.get(position)));
         holder.title.setText(article.getTitle());
-        holder.time.setText(article.getPublishedAt());
+        String date = article.getPublishedAt().substring(0, 10);
+        holder.time.setText(date);
+        holder.description.setText(article.getDescription());
     }
 
     @Override
@@ -63,8 +64,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.card_view)
-        CardView card_view;
+        @BindView(R.id.description)
+        TextView description;
         @BindView(R.id.prev_image)
         ImageView picture;
         @BindView(R.id.title)
