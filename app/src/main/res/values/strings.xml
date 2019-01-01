@@ -10,11 +10,12 @@
     <string name="talksportApi">talksport</string>
     <string name="the_sport_bible">sport bible</string>
     <string name="the_sport_bibleApi">the-sport-bible</string>
-    <string name="empty_error">Error Internet Conection</string>
+    <string name="empty_error">Error Internet Connection</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="read_in_the_original_source">Read in the original source</string>
 </resources>

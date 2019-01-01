@@ -24,7 +24,7 @@ import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.model.pojo.Article;
-import aaa.bbb.ccc.sportnews.ui.activity.DetailsWebActivity;
+import aaa.bbb.ccc.sportnews.ui.activity.DetailsActivity;
 import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +79,7 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         NewsApp.getNewsListComponent().inject(this);
-        adapter.setOnItemClick(article -> startActivity(DetailsWebActivity.getInstance(getActivity(), article)));
+        adapter.setOnItemClick(article -> DetailsActivity.showDetailsNews(getActivity(), article));
         recyclerView.setAdapter(adapter);
         return v;
     }

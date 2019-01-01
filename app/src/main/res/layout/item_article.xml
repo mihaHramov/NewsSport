@@ -21,7 +21,6 @@
                 android:id="@+id/prev_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/error" />

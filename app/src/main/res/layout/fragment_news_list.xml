@@ -11,7 +11,7 @@
         tools:listitem="@layout/item_article"
         android:layout_width="match_parent"
         android:id="@+id/recycler_view"
-        android:layoutAnimation="@anim/item_animation_from_right"
+
         android:layout_height="match_parent" />
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/progress"
