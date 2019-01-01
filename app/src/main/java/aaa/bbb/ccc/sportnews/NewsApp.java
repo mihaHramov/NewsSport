@@ -4,6 +4,7 @@ import android.app.Application;
 
 import aaa.bbb.ccc.sportnews.di.component.DaggerNewsAppComponent;
 import aaa.bbb.ccc.sportnews.di.component.NewsAppComponent;
+import aaa.bbb.ccc.sportnews.di.component.NewsDetailsComponent;
 import aaa.bbb.ccc.sportnews.di.component.NewsListComponent;
 import aaa.bbb.ccc.sportnews.di.component.NewsMenuComponent;
 import aaa.bbb.ccc.sportnews.di.module.ApplicationModule;
@@ -24,5 +25,9 @@ public class NewsApp extends Application {
 
     public static NewsMenuComponent getMenuComponent() {
         return component.getNewsMenuComponent();
+    }
+
+    public static NewsDetailsComponent getNewsDetailsComponent() {
+        return component.getNewsDetailsComponent();
     }
 }
