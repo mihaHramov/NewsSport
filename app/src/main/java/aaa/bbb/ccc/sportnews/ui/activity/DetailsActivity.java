@@ -2,6 +2,7 @@ package aaa.bbb.ccc.sportnews.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -73,6 +74,7 @@ public class DetailsActivity extends MvpAppCompatActivity implements ViewDetails
 
     @Override
     public void showInSource(Article article) {
-        startActivity(DetailsWebActivity.getInstance(this, article));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.getUrl()));
+        startActivity(intent);
     }
 }
