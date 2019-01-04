@@ -17,6 +17,7 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
     private List<NewsSource> localGlobalSource;
     private Scheduler uiThread;
     private Scheduler newThread;
+    private Boolean isEmpty;
 
     private PresenterNewsActivity(IRepositoryOfNews repositoryOfNews, Scheduler thread, Scheduler newThread) {
         this.uiThread = thread;
@@ -32,7 +33,7 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
                 .doOnNext(globalSources -> localGlobalSource = globalSources)
                 .doOnNext(globalSources -> getViewState().showMenu(globalSources))
                 .subscribe(globalSources -> {
-                    Boolean isEmpty  = globalSources.size() == 0;
+                    isEmpty = globalSources.size() == 0;
                     if (!isEmpty) {
                         showNews(0);
                     }
@@ -44,6 +45,12 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
         NewsSource string = localGlobalSource.get(id);
         getViewState().selectItemMenu(id);
         getViewState().showNews(string);
+    }
+
+    public void changeNetwork(Boolean isChangeNetwork) {
+        if (isChangeNetwork && isEmpty) {
+            this.init();
+        }
     }
 
     public static class Builder {
