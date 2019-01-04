@@ -1,6 +1,8 @@
 package aaa.bbb.ccc.sportnews.mvp.model.pojo;
 
-public class NewsSource {
+import java.io.Serializable;
+
+public class NewsSource implements Serializable {
     private String name;
     private String url;
     private Integer id;
