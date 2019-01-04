@@ -1,5 +1,10 @@
 package aaa.bbb.ccc.sportnews.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -23,8 +28,8 @@ import aaa.bbb.ccc.sportnews.R;
 import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsActivity;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
-import aaa.bbb.ccc.sportnews.ui.fragment.BaseNewsListFragment;
 import aaa.bbb.ccc.sportnews.ui.fragment.NewsListFragment;
+import aaa.bbb.ccc.sportnews.ui.util.NetworkUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -39,7 +44,29 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-    private BaseNewsListFragment container;
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = NetworkUtil.getConnectivityStatus(context);
+            if ("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
+                presenterNewsActivity.changeNetwork(status != NetworkUtil.TYPE_NOT_CONNECTED);
+            }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
+    }
 
     @InjectPresenter
     PresenterNewsActivity presenterNewsActivity;
@@ -53,7 +80,10 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
 
     @Override
     public void showNews(NewsSource string) {
-        container.displayNews(string);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, NewsListFragment.newInstance(string))
+                .commit();
     }
 
     @Override
@@ -64,13 +94,6 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         NewsApp.getMenuComponent().inject(this);
-        if (savedInstanceState == null) {
-            container = new NewsListFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, container)
-                    .commit();
-        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -81,7 +104,7 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
 
     @Override
     public void showError(Boolean bool) {
-        error.setVisibility(bool?View.VISIBLE:View.GONE);
+        error.setVisibility(bool ? View.VISIBLE : View.GONE);
     }
 
     @Override

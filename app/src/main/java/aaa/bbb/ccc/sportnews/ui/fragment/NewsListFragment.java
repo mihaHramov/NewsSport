@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -20,17 +21,17 @@ import javax.inject.Inject;
 
 import aaa.bbb.ccc.sportnews.NewsApp;
 import aaa.bbb.ccc.sportnews.R;
+import aaa.bbb.ccc.sportnews.mvp.model.pojo.Article;
 import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
-import aaa.bbb.ccc.sportnews.mvp.model.pojo.Article;
 import aaa.bbb.ccc.sportnews.ui.activity.DetailsActivity;
 import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class NewsListFragment extends BaseNewsListFragment implements ViewNewsListFragment {
+public class NewsListFragment extends MvpAppCompatFragment implements ViewNewsListFragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.progress)
@@ -40,17 +41,15 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
     @Inject
     ArticleAdapter adapter;
 
+    private static final String KEY = NewsListFragment.class.getName();
     @InjectPresenter
     PresenterNewsListFragment presenterNewsListFragment;
 
     @ProvidePresenter
     PresenterNewsListFragment providePresenter() {
-        return NewsApp.getNewsListComponent().getPresenter();
-    }
-
-    @Override
-    public void displayNews(NewsSource tag) {
-        presenterNewsListFragment.init(tag);
+        presenterNewsListFragment = NewsApp.getNewsListComponent().getPresenter();
+        presenterNewsListFragment.init((NewsSource) getArguments().getSerializable(KEY));
+        return presenterNewsListFragment;
     }
 
     @Override
@@ -68,8 +67,16 @@ public class NewsListFragment extends BaseNewsListFragment implements ViewNewsLi
 
     @Override
     public void showError(Boolean isShow) {
-        emptyList.setVisibility(isShow?View.VISIBLE:View.GONE);
-        recyclerView.setVisibility(isShow?View.GONE:View.VISIBLE);
+        emptyList.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(isShow ? View.GONE : View.VISIBLE);
+    }
+
+    public static NewsListFragment newInstance(NewsSource source) {
+        NewsListFragment fragment = new NewsListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY, source);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
