@@ -23,6 +23,7 @@ public class PresenterNewsActivity extends MvpPresenter<ViewNewsActivity> {
         this.uiThread = thread;
         this.newThread = newThread;
         this.repository = repositoryOfNews;
+        isEmpty = false;
     }
 
     public void init() {
