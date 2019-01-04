@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.infideap.drawerbehavior.AdvanceDrawerLayout;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
+    AdvanceDrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
     private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
@@ -98,6 +99,8 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+        drawer.useCustomBehavior(Gravity.START);
+        drawer.setRadius(Gravity.START,45);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
