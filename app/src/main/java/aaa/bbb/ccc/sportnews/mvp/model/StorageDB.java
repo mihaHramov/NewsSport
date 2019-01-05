@@ -16,7 +16,7 @@ import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 
 
 public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "newsManager";
     private static final String TABLE_ARTICLES = "article";
 
@@ -24,6 +24,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     private static final String KEY_AUTHOR = "author";
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_URL = "url";
+    private static final String KEY_CONTENT = "content";
     private static final String KEY_URL_TO_IMAGE = "image_url";
     private static final String KEY_PUBLISHED_AT = "published_at";
     private static final String KEY_SOURCE = "source";
@@ -52,13 +53,13 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
             int urlColIndex = c.getColumnIndex(KEY_URL_OF_SOURCE);
             int nameColIndex = c.getColumnIndex(KEY_NAME_OF_SOURCE);
 
-            do{
+            do {
                 NewsSource source = new NewsSource();
                 source.setId(c.getInt(idColIndex));
                 source.setName(c.getString(nameColIndex));
                 source.setUrl(c.getString(urlColIndex));
                 sourcesList.add(source);
-            }while (c.moveToNext());
+            } while (c.moveToNext());
         }
         c.close();
         db.close();
@@ -73,15 +74,15 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
 
         Cursor c = db.rawQuery(selectQuery, null);
         NewsSource source = new NewsSource();
-        if(!c.moveToFirst()){
+        if (!c.moveToFirst()) {
             ContentValues cv = new ContentValues();
             cv.put(KEY_NAME_OF_SOURCE, sourceName.getName());
-            cv.put(KEY_URL_OF_SOURCE,sourceName.getId());
+            cv.put(KEY_URL_OF_SOURCE, sourceName.getId());
 
             source.setId((int) db.insert(TABLE_SOURCE, null, cv));
             source.setName(sourceName.getName());
             source.setUrl(sourceName.getUrl());
-        }else {
+        } else {
             int idColIndex = c.getColumnIndex(KEY_ID_SOURCE);
             int urlColIndex = c.getColumnIndex(KEY_URL_OF_SOURCE);
             int nameColIndex = c.getColumnIndex(KEY_NAME_OF_SOURCE);
@@ -98,7 +99,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     public News getNewsBySource(NewsSource source) {
         News news = new News();
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectQuery = "SELECT  * FROM " + TABLE_ARTICLES + " WHERE " + KEY_URL_OF_SOURCE + "='" + source.getId() + "'";
+        String selectQuery = "SELECT  * FROM " + TABLE_ARTICLES + " WHERE " + KEY_SOURCE + "='" + source.getId() + "'";
         Cursor c = db.rawQuery(selectQuery, null);
         List<Article> articleList = new ArrayList<>();
         if (c.moveToFirst()) {
@@ -108,7 +109,8 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
             int urlColIndex = c.getColumnIndex(KEY_URL);
             int urlImageColIndex = c.getColumnIndex(KEY_URL_TO_IMAGE);
             int titleImageColIndex = c.getColumnIndex(KEY_TITLE);
-            while (c.moveToNext()) {
+            int contentColIndex = c.getColumnIndex(KEY_CONTENT);
+            do {
                 Article article = new Article();
                 article.setAuthor(c.getString(authorColIndex));
                 article.setDescription(c.getString(descriptionColIndex));
@@ -116,8 +118,9 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
                 article.setUrl(c.getString(urlColIndex));
                 article.setUrlToImage(c.getString(urlImageColIndex));
                 article.setPublishedAt(c.getString(publishedColIndex));
+                article.setContent(c.getString(contentColIndex));
                 articleList.add(article);
-            }
+            } while (c.moveToNext());
         }
         news.setArticles(articleList);
         c.close();
@@ -126,7 +129,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     }
 
     @Override
-    public void addNews(News news, NewsSource souce) {
+    public void addNews(News news, NewsSource source) {
         if (news == null) return;
         SQLiteDatabase db = this.getWritableDatabase();
         for (Article ar : news.getArticles()) {
@@ -140,7 +143,8 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
                 cv.put(KEY_PUBLISHED_AT, ar.getPublishedAt());
                 cv.put(KEY_URL, ar.getUrl());
                 cv.put(KEY_URL_TO_IMAGE, ar.getUrlToImage());
-                cv.put(KEY_SOURCE, souce.getId());
+                cv.put(KEY_SOURCE, source.getId());
+                cv.put(KEY_CONTENT, ar.getContent());
                 db.insert(TABLE_ARTICLES, null, cv);
             }
             cursor.close();
@@ -158,6 +162,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
                 + KEY_URL + " TEXT,"
                 + KEY_URL_TO_IMAGE + " TEXT,"
                 + KEY_TITLE + " TEXT,"
+                + KEY_CONTENT + " TEXT,"
                 + KEY_PUBLISHED_AT + " TEXT,"
                 + KEY_SOURCE + " INTEGER" + ")";
         db.execSQL(CREATE_ARTICLE_TABLE);
@@ -165,7 +170,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
         String CREATE_SOURCE_TABLE = "CREATE TABLE " + TABLE_SOURCE + "("
                 + KEY_ID_SOURCE + " INTEGER PRIMARY KEY,"
                 + KEY_NAME_OF_SOURCE + " TEXT,"
-                + KEY_URL_OF_SOURCE +" TEXT"+
+                + KEY_URL_OF_SOURCE + " TEXT" +
                 ")";
         db.execSQL(CREATE_SOURCE_TABLE);
     }
