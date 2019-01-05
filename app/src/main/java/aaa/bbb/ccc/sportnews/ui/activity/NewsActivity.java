@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.infideap.drawerbehavior.AdvanceDrawerLayout;
+import com.infideap.drawerbehavior.Advance3DDrawerLayout;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
-    AdvanceDrawerLayout drawer;
+    Advance3DDrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
     private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
@@ -99,8 +100,12 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        drawer.useCustomBehavior(Gravity.START);
-        drawer.setRadius(Gravity.START,45);
+        drawer.setViewRotation(Gravity.START, 15);
+        drawer.setViewScale(Gravity.START, 0.9f); //set height scale for main view (0f to 1f)
+        drawer.setViewElevation(Gravity.START, 20);//set main view elevation when drawer open (dimension)
+        drawer.setViewScrimColor(Gravity.START, Color.TRANSPARENT);//set drawer overlay coloe (color)
+        drawer.setDrawerElevation(Gravity.START, 20);//set drawer elevation (dimension)
+        drawer.setRadius(Gravity.START, 25);//set end container's corner radius (dimension)
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
