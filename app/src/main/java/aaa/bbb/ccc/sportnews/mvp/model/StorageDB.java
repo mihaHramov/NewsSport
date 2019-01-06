@@ -129,8 +129,8 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
     }
 
     @Override
-    public void addNews(News news, NewsSource source) {
-        if (news == null) return;
+    public News addNews( NewsSource source) {
+        News news = source.getNews();
         SQLiteDatabase db = this.getWritableDatabase();
         for (Article ar : news.getArticles()) {
             String selectQuery = "SELECT  * FROM " + TABLE_ARTICLES + " WHERE " + KEY_URL + "='" + ar.getUrl() + "'";
@@ -150,6 +150,7 @@ public class StorageDB extends SQLiteOpenHelper implements ILocalStorage {
             cursor.close();
         }
         db.close();
+        return source.getNews();
     }
 
 

@@ -10,6 +10,6 @@ import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 public interface ILocalStorage {
     NewsSource addNewsSource(GlobalSource source);
     List<NewsSource> getAllSources();
-    void addNews(News news, NewsSource source);
+    News addNews(NewsSource source);
     News getNewsBySource(NewsSource string);
 }

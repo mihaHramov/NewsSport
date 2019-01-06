@@ -8,19 +8,22 @@ import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.model.pojo.ResponceOfSource;
 import rx.Observable;
 
-public class RepositoryOfNews implements IRepositoryOfNews{
+public class RepositoryOfNews implements IRepositoryOfNews {
     private final ILocalStorage storage;
     private NyNewsApi api;
 
-    public RepositoryOfNews(NyNewsApi api,ILocalStorage storage) {
+    public RepositoryOfNews(NyNewsApi api, ILocalStorage storage) {
         this.api = api;
         this.storage = storage;
     }
 
-    public Observable<News> getNews(NewsSource string){
-       return api.getAllNews(string.getUrl())
-               .doOnNext(news -> storage.addNews(news, string))
-               .onErrorResumeNext(throwable -> Observable.fromCallable(() -> storage.getNewsBySource(string)));
+    public Observable<News> getNews(NewsSource string) {
+        Observable<News> bd = Observable.fromCallable(() -> storage.getNewsBySource(string));
+        return api.getAllNews(string.getUrl()).zipWith(Observable.just(string), (news, source) -> {
+                    source.setNews(news);
+                    return source; })
+                .map(storage::addNews)
+                .onErrorResumeNext(throwable -> bd);
     }
 
     public Observable<List<NewsSource>> getAllSource() {
