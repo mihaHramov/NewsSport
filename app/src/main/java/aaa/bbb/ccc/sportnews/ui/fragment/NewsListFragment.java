@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.squareup.otto.Subscribe;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
@@ -27,6 +28,8 @@ import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsListFragment;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsListFragment;
 import aaa.bbb.ccc.sportnews.ui.activity.DetailsActivity;
 import aaa.bbb.ccc.sportnews.ui.adapter.ArticleAdapter;
+import aaa.bbb.ccc.sportnews.ui.util.BusProvider;
+import aaa.bbb.ccc.sportnews.ui.util.ChangeNetworkConnect;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -88,6 +91,20 @@ public class NewsListFragment extends MvpAppCompatFragment implements ViewNewsLi
         NewsApp.getNewsListComponent().inject(this);
         adapter.setOnItemClick(article -> DetailsActivity.showDetailsNews(getActivity(), article));
         recyclerView.setAdapter(adapter);
+        BusProvider.getInstance().register(this);
         return v;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        BusProvider.getInstance().unregister(this);
+    }
+
+    @Subscribe
+    public void changeNetworkConnect (ChangeNetworkConnect connect){
+        presenterNewsListFragment.changeNetwork(connect.getConnect());
+    }
+
+
 }

@@ -22,6 +22,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.infideap.drawerbehavior.Advance3DDrawerLayout;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ import aaa.bbb.ccc.sportnews.mvp.model.pojo.NewsSource;
 import aaa.bbb.ccc.sportnews.mvp.presenter.PresenterNewsActivity;
 import aaa.bbb.ccc.sportnews.mvp.view.ViewNewsActivity;
 import aaa.bbb.ccc.sportnews.ui.fragment.NewsListFragment;
+import aaa.bbb.ccc.sportnews.ui.util.BusProvider;
+import aaa.bbb.ccc.sportnews.ui.util.ChangeNetworkConnect;
 import aaa.bbb.ccc.sportnews.ui.util.NetworkUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,29 +49,6 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
     Advance3DDrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = NetworkUtil.getConnectivityStatus(context);
-            if ("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
-                presenterNewsActivity.changeNetwork(status != NetworkUtil.TYPE_NOT_CONNECTED);
-            }
-        }
-    };
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeReceiver, intentFilter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(networkChangeReceiver);
-    }
 
     @InjectPresenter
     PresenterNewsActivity presenterNewsActivity;
@@ -78,6 +58,21 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         presenterNewsActivity = NewsApp.getMenuComponent().getPresenter();
         presenterNewsActivity.init();
         return presenterNewsActivity;
+    }
+
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = NetworkUtil.getConnectivityStatus(context);
+            if ("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
+                BusProvider.getInstance().post(new ChangeNetworkConnect(status != NetworkUtil.TYPE_NOT_CONNECTED));
+            }
+        }
+    };
+
+    @Subscribe
+    public void changeNetworkConnect (ChangeNetworkConnect connect){
+        presenterNewsActivity.changeNetwork(connect.getConnect());
     }
 
     @Override
@@ -96,7 +91,31 @@ public class NewsActivity extends MvpAppCompatActivity implements ViewNewsActivi
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         NewsApp.getMenuComponent().inject(this);
+        initDrawerLayout();
+        BusProvider.getInstance().register(this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BusProvider.getInstance().unregister(this);
+    }
+
+    private void initDrawerLayout() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
