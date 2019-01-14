@@ -12,6 +12,8 @@ import rx.Scheduler;
 @InjectViewState
 public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment> {
     private IRepositoryOfNews repository;
+    private NewsSource source;
+    private Boolean isError;
     private Scheduler uiThread;
     private Scheduler newThread;
 
@@ -23,15 +25,24 @@ public class PresenterNewsListFragment extends MvpPresenter<ViewNewsListFragment
     }
 
     public void init(NewsSource string) {
+        source = string;
         repository.getNews(string)
                 .flatMap(news -> Observable.from(news.getArticles()))
                 .filter(article -> !article.getUrl().contains("facebook"))
                 .toList()
                 .subscribeOn(newThread)
                 .observeOn(uiThread)
+                .doOnSubscribe(()->getViewState().showError(false))
                 .doOnSubscribe(() -> getViewState().loading(true))
                 .doOnNext(articles -> getViewState().showError(articles.size() == 0))
+                .doOnNext(articles -> isError = articles.size() == 0)
                 .subscribe(news -> getViewState().showNews(news), throwable -> getViewState().loading(false), () -> getViewState().loading(false));
+    }
+
+    public void changeNetwork(Boolean connect) {
+        if (connect && isError) {
+            init(source);
+        }
     }
 
     public static class Builder {
